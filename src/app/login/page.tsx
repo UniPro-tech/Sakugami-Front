@@ -1,9 +1,6 @@
 "use client";
 
 import { TextField, Button, Paper, Box } from "@mui/material";
-import { Noto_Sans_JP } from "next/font/google";
-
-const notoSansJP = Noto_Sans_JP({ subsets: ["latin"] });
 
 export default function Login() {
   return (
@@ -34,7 +31,6 @@ export default function Login() {
         }}
       >
         <h1
-          className={notoSansJP.className}
           style={{
             fontSize: "2rem",
             marginBottom: "1.5rem",

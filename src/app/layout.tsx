@@ -4,7 +4,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonIcon from "@mui/icons-material/Person";
 
-import type { Navigation } from "@toolpad/core/AppProvider";
+import type { Branding, Navigation } from "@toolpad/core/AppProvider";
 import { SessionProvider, signIn, signOut } from "next-auth/react";
 import { auth } from "@/auth";
 import theme from "@/theme";
@@ -32,8 +32,16 @@ const NAVIGATION: Navigation = [
   },
 ];
 
-const BRANDING = {
-  title: "My Toolpad Core Next.js App",
+const BRANDING: Branding = {
+  logo: (
+    <img
+      src="https://mui.com/static/logo.svg"
+      alt="MUI logo"
+      style={{ height: 24 }}
+    />
+  ),
+  title: "SAKUGAMI",
+  homeUrl: "/",
 };
 
 const AUTHENTICATION = {

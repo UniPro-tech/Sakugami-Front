@@ -6,23 +6,42 @@ import { providerMap } from "@/auth";
 import type { AuthProvider } from "@toolpad/core";
 import serverSignIn from "./actions";
 
-const signIn = async (provider: AuthProvider, formData: FormData, callbackUrl?: string) => {
+import type { AuthResponse } from "@toolpad/core";
+
+const signIn = async (
+  provider: AuthProvider,
+  formData: FormData,
+  callbackUrl?: string
+): Promise<AuthResponse> => {
   if (provider.id === "passkey") {
     try {
-      return await webauthnSignIn("passkey", {
+      const result = await webauthnSignIn("passkey", {
         email: formData.get("email"),
         callbackUrl: callbackUrl || "/",
       });
+      // resultがAuthResponse型でなければエラーを返す
+      if (!result || typeof result !== "object" || !("ok" in result || "error" in result)) {
+        return {
+          error: "Invalid response from WebAuthn signIn",
+        };
+      }
+      return result as AuthResponse;
     } catch (error) {
       console.error(error);
       return {
         error: (error as Error)?.message || "Something went wrong",
-        type: "WebAuthnError",
       };
     }
   }
   // Use server action for other providers
-  return serverSignIn(provider, formData, callbackUrl);
+  const result = await serverSignIn(provider, formData, callbackUrl);
+  // serverSignInがundefined返す可能性があるので、必ずAuthResponse返すようにする
+  if (!result || typeof result !== "object" || !("ok" in result || "error" in result)) {
+    return {
+      error: "Invalid response from server signIn",
+    };
+  }
+  return result as AuthResponse;
 };
 
 export default function SignIn() {

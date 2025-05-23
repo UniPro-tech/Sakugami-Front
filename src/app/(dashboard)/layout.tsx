@@ -156,20 +156,34 @@ const SidebarFooterAccount = ({ mini }: SidebarFooterProps) => {
 export default function Layout(props: { children: React.ReactNode }) {
   const pathname = usePathname();
   const params = useParams();
-  const [employeeId] = params.segments ?? [];
+  const [segments] = params.segments ?? [];
 
   const title = React.useMemo(() => {
-    if (pathname === "/employees/new") {
-      return "New Employee";
+    switch (pathname.split("/")[1]) {
+      case "employees":
+        if (pathname === "/employees/new") {
+          return "New Employee";
+        }
+        if (segments && pathname.includes("/edit")) {
+          return `Employee ${segments} - Edit`;
+        }
+        if (segments) {
+          return `Employee ${segments}`;
+        }
+        return undefined;
+      case "projects":
+        if (pathname === "/projects/new") {
+          return "New Project";
+        }
+        if (segments && pathname.includes("/edit")) {
+          return `Project ${segments} - Edit`;
+        }
+        if (segments) {
+          return `Project ${segments}`;
+        }
+        return undefined;
     }
-    if (employeeId && pathname.includes("/edit")) {
-      return `Employee ${employeeId} - Edit`;
-    }
-    if (employeeId) {
-      return `Employee ${employeeId}`;
-    }
-    return undefined;
-  }, [employeeId, pathname]);
+  }, [segments, pathname]);
 
   return (
     <DashboardLayout slots={{ toolbarAccount: () => null, sidebarFooter: SidebarFooterAccount }}>

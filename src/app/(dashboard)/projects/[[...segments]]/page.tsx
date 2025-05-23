@@ -1,10 +1,10 @@
-import { Crud } from "@toolpad/core/Crud";
-import { employeesDataSource, Employee, employeesCache } from "@/data/employees";
-import { redirect } from "next/navigation";
-import { headers } from "next/headers";
 import { auth } from "@/auth";
+import { Project, projectsCache, projectsDataSource } from "@/data/projects";
+import { Crud } from "@toolpad/core";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default async function EmployeesCrudPage() {
+export default async function Home() {
   const session = await auth();
   const currentUrl =
     (await headers()).get("referer") || process.env.AUTH_URL || "http://localhost:3000";
@@ -17,10 +17,10 @@ export default async function EmployeesCrudPage() {
   }
 
   return (
-    <Crud<Employee>
-      dataSource={employeesDataSource}
-      dataSourceCache={employeesCache}
-      rootPath="/employees"
+    <Crud<Project>
+      dataSource={projectsDataSource}
+      dataSourceCache={projectsCache}
+      rootPath="/projects"
       initialPageSize={25}
       defaultValues={{ itemCount: 1 }}
     />

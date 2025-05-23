@@ -2,6 +2,7 @@ import * as React from "react";
 import { NextAppProvider } from "@toolpad/core/nextjs";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import FolderIcon from "@mui/icons-material/Folder";
 import PersonIcon from "@mui/icons-material/Person";
 
 import type { Branding, Navigation } from "@toolpad/core/AppProvider";
@@ -23,6 +24,12 @@ const NAVIGATION: Navigation = [
     segment: "",
     title: "Dashboard",
     icon: <DashboardIcon />,
+  },
+  {
+    segment: "projects",
+    title: "Projects",
+    icon: <FolderIcon />,
+    pattern: "projects{/:projectId}*",
   },
   {
     segment: "employees",

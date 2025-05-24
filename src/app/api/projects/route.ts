@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getProjectsStore, setProjectsStore } from "@/projectsStore";
+import { getProjectsStore, setProjectsStore } from "@/stores/projectsStore";
 import type { Project } from "@/data/projects";
 import type { GridFilterModel, GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
 import type { OmitId } from "@toolpad/core/Crud";

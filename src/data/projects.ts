@@ -1,6 +1,7 @@
 "use client";
 import { DataModel, DataSource, DataSourceCache } from "@toolpad/core/Crud";
 import { z } from "zod";
+import { Teams } from "./teams";
 
 // TODO: アトリビュートを整理する
 export interface Project extends DataModel {
@@ -9,7 +10,7 @@ export interface Project extends DataModel {
   customId: string;
   createdAt: EpochTimeStamp;
   updatedAt: EpochTimeStamp;
-  owner: number;
+  owner: Teams;
 }
 
 const API_URL = "/api/projects";
@@ -36,8 +37,13 @@ export const projectsDataSource: DataSource<Project> = {
     {
       field: "owner",
       headerName: "Owner",
-      type: "number",
+      type: "singleSelect",
       width: 160,
+      valueOptions: [
+        { value: "1", label: "山田太郎" },
+        { value: "2", label: "鈴木花子" },
+        { value: "3", label: "佐藤次郎" },
+      ],
     },
   ],
   getMany: async ({ paginationModel, filterModel, sortModel }) => {
@@ -114,7 +120,10 @@ export const projectsDataSource: DataSource<Project> = {
       .nonempty("Custom ID is required"),
     createdAt: z.number({ required_error: "Created date is required" }),
     updatedAt: z.number({ required_error: "Updated date is required" }),
-    owner: z.number({ required_error: "Owner is required" }),
+    owner: z.object({
+      id: z.string(),
+      name: z.string(),
+    }),
   })["~standard"].validate,
 };
 

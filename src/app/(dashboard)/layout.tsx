@@ -182,6 +182,17 @@ export default function Layout(props: { children: React.ReactNode }) {
           return `Project ${segments}`;
         }
         return undefined;
+      case "teams":
+        if (pathname === "/teams/new") {
+          return "New Team";
+        }
+        if (segments && pathname.includes("/edit")) {
+          return `Team ${segments} - Edit`;
+        }
+        if (segments) {
+          return `Team ${segments}`;
+        }
+        return undefined;
     }
   }, [segments, pathname]);
 

@@ -92,6 +92,7 @@ export const employeesDataSource: DataSource<Employee> = {
     return resJson;
   },
   deleteOne: async (employeeId) => {
+    // TODO: ここをmemberから削除するように変える
     const res = await fetch(`${API_URL}/${employeeId}`, { method: "DELETE" });
     const resJson = await res.json();
 

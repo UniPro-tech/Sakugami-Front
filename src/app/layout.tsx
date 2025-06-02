@@ -4,6 +4,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import FolderIcon from "@mui/icons-material/Folder";
 import PersonIcon from "@mui/icons-material/Person";
+import GroupIcon from "@mui/icons-material/Group";
 
 import type { Branding, Navigation } from "@toolpad/core/AppProvider";
 import { SessionProvider, signIn, signOut } from "next-auth/react";
@@ -36,6 +37,12 @@ const NAVIGATION: Navigation = [
     title: "Employees",
     icon: <PersonIcon />,
     pattern: "employees{/:employeeId}*",
+  },
+  {
+    segment: "teams",
+    title: "Teams",
+    icon: <GroupIcon />,
+    pattern: "teams{/:teamId}*",
   },
 ];
 

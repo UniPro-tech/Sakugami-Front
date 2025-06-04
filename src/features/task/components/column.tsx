@@ -1,7 +1,9 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown } from "lucide-react";
 
 export type Task = {
   id: number;
@@ -44,7 +46,17 @@ export const columns: ColumnDef<Task>[] = [
   {
     id: "dueDate",
     accessorFn: (row) => row.dueDate?.toLocaleDateString() || "未設定",
-    header: "Due Date",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Due Date
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
   {
     id: "title",

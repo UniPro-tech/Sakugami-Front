@@ -20,6 +20,7 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -74,9 +75,12 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
             <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
-                className="ml-auto"
+                className="ml-auto capitalize"
               >
-                {filterColumn} <ChevronDown className="ml-2 h-4 w-4" />
+                {filterColumn.includes("customFields.")
+                  ? filterColumn.split("customFields.")[1]
+                  : filterColumn}{" "}
+                <ChevronDown className="ml-2 h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -85,14 +89,15 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                 .filter((column) => column.getCanHide())
                 .map((column) => {
                   return (
-                    <DropdownMenuCheckboxItem
+                    <DropdownMenuItem
                       key={column.id}
                       className="capitalize"
-                      checked={column.getIsVisible()}
-                      onCheckedChange={() => setFilterColumn(column.id)}
+                      onClick={() => setFilterColumn(column.id)}
                     >
-                      {column.id}
-                    </DropdownMenuCheckboxItem>
+                      {column.id.includes("customFields.")
+                        ? column.id.split("customFields.")[1]
+                        : column.id}
+                    </DropdownMenuItem>
                   );
                 })}
             </DropdownMenuContent>

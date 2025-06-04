@@ -1,6 +1,6 @@
 import { mockTasks } from "../mockData";
-import { DataTable } from "@/components/ui/DataTable";
-import { columns, Task } from "./column";
+import { DataTable } from "@/components/table/DataTable";
+import { columns } from "./column";
 
 export function TaskTable() {
   return (

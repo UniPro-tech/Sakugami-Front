@@ -21,4 +21,14 @@ export const mockTasks: Task[] = [
       estimate: "1 hour",
     },
   },
+  {
+    id: 3,
+    title: "スタイルを整える",
+    status: "In Progress",
+    dueDate: new Date("2025-06-10"),
+    customFields: {
+      priority: "Low",
+      estimate: "2 hours",
+    },
+  },
 ];

@@ -1,5 +1,5 @@
-import { TaskTable } from "@/features/task/components/TaskTable";
+import { CustomFieldForm } from "@/features/task/components/custom-field-form";
 
 export default function Home() {
-  return <TaskTable />;
+  return <CustomFieldForm />;
 }

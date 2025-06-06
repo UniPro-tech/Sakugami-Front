@@ -16,12 +16,17 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 export type Task = {
   id: number;
   title: string;
-  status: "TODO" | "In Progress" | "Done";
+  status: "Todo" | "In Progress" | "Done";
   dueDate: Date | null;
-  customFields?: {
-    priority?: "Low" | "Medium" | "High";
-    estimate?: string;
-  };
+  customFields: Record<string, string | number | boolean | null>;
+};
+
+export type CustomFieldDefinition = {
+  id: number;
+  name: string;
+  fieldType: "text" | "number" | "select" | "checkbox" | "date";
+  options?: string[]; // select の場合のみ
+  required: boolean;
 };
 
 export const columns: ColumnDef<Task>[] = [

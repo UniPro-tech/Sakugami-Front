@@ -14,11 +14,17 @@ export function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
   const isOverdue = task.dueDate ? task.dueDate < new Date() : false;
 
   return (
-    <Card className="w-full shadow-md">
-      <CardHeader className="pb-2">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-base">{task.title}</CardTitle>
-          {task.statusOption && (
+    <Card className="w-full bg-white hover:shadow-md transition-shadow duration-200 border-gray-100">
+      <CardHeader className="pb-2 px-4 pt-3">
+        <div className="flex items-center justify-between gap-2">
+          <CardTitle className="text-base font-medium line-clamp-2">{task.title}</CardTitle>
+        </div>
+      </CardHeader>
+
+      <CardContent className="space-y-2 text-sm px-4">
+        {task.statusOption && (
+          <div className="flex justify-between items-center">
+            <div className="font-semibold mb-1">Status:</div>
             <span
               className="inline-block px-2 py-0.5 rounded-full font-semibold text-sm shadow-2xs"
               style={{
@@ -28,11 +34,8 @@ export function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
             >
               {task.statusOption.name}
             </span>
-          )}
-        </div>
-      </CardHeader>
-
-      <CardContent className="space-y-1 text-sm">
+          </div>
+        )}
         <div className="flex justify-between">
           <div className="font-semibold">Due:</div>
           <div className={`${isOverdue ? "text-red-600 font-semibold" : ""}`}>

@@ -13,21 +13,7 @@ import {
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
-export type Task = {
-  id: number;
-  title: string;
-  status: "Todo" | "In Progress" | "Done";
-  dueDate: Date | null;
-  customFields: Record<string, string | number | boolean | null>;
-};
-
-export type CustomFieldDefinition = {
-  id: number;
-  name: string;
-  fieldType: "text" | "number" | "select" | "checkbox" | "date";
-  options?: string[]; // select の場合のみ
-  required: boolean;
-};
+import { Task } from "../../../types";
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -53,7 +39,21 @@ export const columns: ColumnDef<Task>[] = [
   },
   {
     id: "status",
-    accessorKey: "status",
+    accessorFn: (row) => row.statusOption?.name ?? "",
+    cell: ({ row }) => {
+      const status = row.original.statusOption;
+      return status ? (
+        <div className="flex items-center gap-2">
+          <div
+            className="h-2 w-2 rounded-full"
+            style={{ backgroundColor: status.color }}
+          />
+          <span>{status.name}</span>
+        </div>
+      ) : (
+        <span className="text-muted-foreground">未設定</span>
+      );
+    },
     header: "Status",
   },
   {

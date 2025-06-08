@@ -1,7 +1,8 @@
-import { Task } from "../../../types"; // Task型
+import { Task } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Pencil, Trash2 } from "lucide-react";
+import { Check } from "lucide-react";
 
 interface TaskCardProps {
   task: Task;
@@ -10,48 +11,75 @@ interface TaskCardProps {
 }
 
 export function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
-  const statusColor =
-    {
-      Todo: "bg-gray-200 text-gray-800",
-      "In Progress": "bg-yellow-200 text-yellow-800",
-      Done: "bg-green-200 text-green-800",
-    }[task.status] || "bg-gray-100 text-gray-700";
+  const isOverdue = task.dueDate ? task.dueDate < new Date() : false;
 
   return (
     <Card className="w-full shadow-md">
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <CardTitle className="text-base">{task.title}</CardTitle>
-          <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${statusColor}`}>
-            {task.status}
-          </span>
+          {task.statusOption && (
+            <span
+              className="inline-block px-2 py-0.5 rounded-full font-semibold text-sm shadow-2xs"
+              style={{
+                backgroundColor: task.statusOption.color ?? "#ccc",
+                color: "#fff",
+              }}
+            >
+              {task.statusOption.name}
+            </span>
+          )}
         </div>
       </CardHeader>
 
       <CardContent className="space-y-1 text-sm">
         <div className="flex justify-between">
           <div className="font-semibold">Due:</div>
-          <div>{task.dueDate?.toLocaleDateString() ?? "未設定"}</div>
+          <div className={`${isOverdue ? "text-red-600 font-semibold" : ""}`}>
+            {task.dueDate?.toLocaleDateString() ?? "未設定"}
+          </div>
         </div>
 
         {Object.entries(task.customFields).map(([key, value]) => (
           <div
             key={key}
-            className="flex justify-between"
+            className="flex justify-between items-center"
           >
             <div className="font-semibold">{key.charAt(0).toUpperCase() + key.slice(1)}:</div>
-            <div>{value}</div>
+            <div>
+              {typeof value === "boolean" ? (
+                value ? (
+                  <Check className="inline-block w-4 h-4 text-green-600" />
+                ) : (
+                  "✗"
+                )
+              ) : value instanceof Date ? (
+                value.toLocaleDateString()
+              ) : typeof value === "object" && value !== null && "name" in value ? (
+                <span
+                  className="inline-block px-2 py-0.5 rounded-full"
+                  style={{
+                    backgroundColor: value.color ?? "#ccc",
+                    color: "#fff",
+                  }}
+                >
+                  {value.name}
+                </span>
+              ) : (
+                value ?? ""
+              )}
+            </div>
           </div>
         ))}
       </CardContent>
 
       <CardFooter className="flex justify-end gap-2">
-        {/* TODO: Add edit and delete functionality */}
         <Button
           size="icon"
           variant="ghost"
           onClick={onEdit}
           aria-label="Edit Task"
+          disabled={!onEdit}
         >
           <Pencil className="w-4 h-4" />
         </Button>
@@ -60,6 +88,7 @@ export function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
           variant="ghost"
           onClick={onDelete}
           aria-label="Delete Task"
+          disabled={!onDelete}
         >
           <Trash2 className="w-4 h-4 text-red-500" />
         </Button>

@@ -16,7 +16,13 @@ export const mockTasks: Task[] = [
     projectId: 1,
     createdAt: new Date(),
     customFields: {
-      priority: "High",
+      priority: {
+        id: 1,
+        name: "High",
+        color: "#f87171", // 赤
+        createdAt: new Date(),
+        fieldId: 101,
+      },
       estimate: "2 hours",
     },
   },
@@ -35,7 +41,13 @@ export const mockTasks: Task[] = [
     projectId: 1,
     createdAt: new Date(),
     customFields: {
-      priority: "Medium",
+      priority: {
+        id: 1,
+        name: "High",
+        color: "#f87171", // 赤
+        createdAt: new Date(),
+        fieldId: 101,
+      },
       estimate: "1 hour",
     },
   },
@@ -54,7 +66,13 @@ export const mockTasks: Task[] = [
     projectId: 1,
     createdAt: new Date(),
     customFields: {
-      priority: "Low",
+      priority: {
+        id: 2,
+        name: "Medium",
+        color: "#fbbf24", // 黄色
+        createdAt: new Date(),
+        fieldId: 101,
+      },
       estimate: "2 hours",
     },
   },
